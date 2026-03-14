@@ -156,6 +156,34 @@ Gemini can analyze **text and images together in a single prompt**, enabling the
 
 ---
 
+# Roadmap
+
+These features are planned for upcoming development:
+
+## Clarity Mode
+
+A dedicated tab for cognitive support beyond thread reconstruction. Users will be able to paste complex text or upload a screenshot of a document, email, or message, and receive:
+
+- A **1-line summary** of the content
+- **Bullet-point breakdown** of key information
+- The **key action required** highlighted prominently
+- An optional **draft reply** ready to copy
+- **Read Aloud** using the device's text-to-speech
+- **Language selector** for multilingual output
+- **Larger Text toggle** for enhanced readability
+
+Designed for users dealing with dense emails, legal documents, medical instructions, or any text that feels overwhelming.
+
+## Day, Night, and Sensitivity Modes
+
+Three visual themes tailored to different contexts and cognitive needs:
+
+- **Day mode** — lighter palette for bright environments and outdoor use
+- **Night mode** — the current dark Greek-inspired palette, optimized for low-light and reduced eye strain
+- **Sensitivity mode** — ultra-low contrast, muted colors, and minimal visual stimulation for users experiencing migraines, sensory overload, or heightened light sensitivity
+
+---
+
 # Architecture
 
 ![Architecture](docs/architecture.png)
