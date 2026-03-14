@@ -4,6 +4,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   Animated,
+  Linking,
   Platform,
   Pressable,
   ScrollView,
@@ -137,6 +138,28 @@ export default function ThreadDetailScreen() {
             <Text style={styles.currentStepText}>{thread.current_step}</Text>
           </View>
         </Section>
+
+        {thread.location ? (
+          <Pressable
+            style={styles.directionsButton}
+            onPress={() => {
+              if (Platform.OS !== "web") Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(thread.location!)}`;
+              Linking.openURL(url);
+            }}
+            accessibilityRole="button"
+            accessibilityLabel={`Start directions to ${thread.location}`}
+          >
+            <View style={styles.directionsIconBox}>
+              <Feather name="map-pin" size={20} color="#FFFFFF" />
+            </View>
+            <View style={styles.directionsTextBox}>
+              <Text style={styles.directionsLabel}>Start directions</Text>
+              <Text style={styles.directionsLocation} numberOfLines={1}>{thread.location}</Text>
+            </View>
+            <Feather name="external-link" size={16} color={Colors.light.textTertiary} />
+          </Pressable>
+        ) : null}
 
         <Section title="Important Context" icon="info">
           <Text style={styles.bodyText}>{thread.important_context}</Text>
@@ -516,5 +539,39 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.light.textSecondary,
     lineHeight: 22,
+  },
+  directionsButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: Colors.light.backgroundSecondary,
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: Colors.light.priorityLow + "40",
+    gap: 14,
+    minHeight: 64,
+  },
+  directionsIconBox: {
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: Colors.light.priorityLow,
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  directionsTextBox: {
+    flex: 1,
+    gap: 2,
+  },
+  directionsLabel: {
+    fontFamily: "Inter_600SemiBold",
+    fontSize: 16,
+    color: Colors.light.text,
+  },
+  directionsLocation: {
+    fontFamily: "Inter_400Regular",
+    fontSize: 13,
+    color: Colors.light.textTertiary,
   },
 });

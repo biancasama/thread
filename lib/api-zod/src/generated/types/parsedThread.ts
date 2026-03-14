@@ -14,4 +14,5 @@ export interface ParsedThread {
   important_context: string;
   next_actions: string[];
   priority: ParsedThreadPriority;
+  location?: string | null;
 }

@@ -19,7 +19,8 @@ Return ONLY valid JSON with this exact structure, nothing else:
   "current_step": "what the person is currently doing or was doing when interrupted",
   "important_context": "key context reconstructed from all fragments that helps resume work",
   "next_actions": ["action 1", "action 2", "action 3"],
-  "priority": "low" | "medium" | "high"
+  "priority": "low" | "medium" | "high",
+  "location": "physical location, address, or venue name if detected, or null"
 }
 
 Rules:
@@ -30,6 +31,7 @@ Rules:
 - next_actions: 2-4 concrete, actionable next steps — tell them exactly what to do when they return
 - priority: infer from urgency/importance signals across all fragments
 - If images contain code, documents, or UI, extract relevant details into the context
+- location: if any physical location, address, venue name, business name, or place is mentioned in the fragments, extract it here. If no location is detected, set to null.
 - Return ONLY the JSON object, no markdown, no explanation
 - Keep language productivity-focused. Never give medical or therapeutic advice.`;
 
@@ -135,6 +137,7 @@ router.post("/thread/parse", async (req, res) => {
       important_context: string;
       next_actions: string[];
       priority: "low" | "medium" | "high";
+      location?: string | null;
     };
 
     try {
@@ -161,7 +164,24 @@ router.post("/thread/parse", async (req, res) => {
       return;
     }
 
-    res.json(threadData);
+    if (
+      threadData.location !== undefined &&
+      threadData.location !== null &&
+      typeof threadData.location !== "string"
+    ) {
+      threadData.location = null;
+    }
+
+    if (typeof threadData.location === "string" && threadData.location.trim() === "") {
+      threadData.location = null;
+    }
+
+    const responseData: Record<string, unknown> = { ...threadData };
+    if (!threadData.location) {
+      delete responseData.location;
+    }
+
+    res.json(responseData);
   } catch (error) {
     console.error("Thread parse error:", error);
     res.status(500).json({ error: "Internal server error" });

@@ -21,6 +21,7 @@ export interface Thread {
   important_context: string;
   next_actions: string[];
   priority: "low" | "medium" | "high";
+  location?: string | null;
   raw_input: string;
   created_at: string;
 }
@@ -129,6 +130,7 @@ export function ThreadProvider({ children }: { children: React.ReactNode }) {
         important_context: data.important_context,
         next_actions: data.next_actions,
         priority: data.priority,
+        location: data.location || null,
         raw_input: rawInput,
         created_at: new Date().toISOString(),
       };

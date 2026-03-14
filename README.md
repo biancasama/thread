@@ -69,9 +69,33 @@ It captures fragments of thought — text, screenshots, or images — and uses G
 • **Next actions** — concrete steps to resume work  
 • **Priority level** — how urgent it is  
 
-When you return — minutes later or the next morning — you open Thread and tap **"Where was I?"**.
+When you return — minutes later or the next morning — you open Thread and tap **"Find the thread"**.
 
 Instead of re-thinking everything, your context reloads instantly.
+
+---
+
+# Features
+
+## Guide Me Back
+
+Thread automatically detects when your fragments mention a physical location — an address, a venue, a business name. When a location is found, the reconstructed thread includes a **"Start directions"** button that opens Google Maps with turn-by-turn navigation to that place.
+
+This is especially useful for errands, appointments, or tasks tied to a specific place. You capture the context ("picking up prescription at the pharmacy on Rue de Rivoli"), and when you return to the thread later, you can navigate there with one tap — no need to search for the address again.
+
+## Ariadne-Inspired Logo
+
+The Thread logo draws on the myth of Ariadne's thread — the lifeline that guided Theseus through the labyrinth. It appears throughout the app as a visual anchor: on the capture screen, the thread list, and as the app's identity. The logo reinforces the core metaphor: Thread is your guide back through the labyrinth of interrupted thoughts.
+
+## Cognitive Accessibility Redesign
+
+Thread's entire interface was redesigned around cognitive accessibility principles:
+
+- **Dark Greek-inspired palette** — deep navy backgrounds (#0B0D1A) with warm ivory text (#F5F1E8), reducing visual fatigue and screen glare
+- **Lexend font family** — a typeface specifically designed to improve reading fluency, used across all weights (Regular, Medium, SemiBold, Bold)
+- **Generous tap targets** — all interactive elements have a minimum 56px touch area, making the app easier to use under stress or with reduced motor precision
+- **Reduced visual noise** — minimal borders, soft card surfaces, and consistent spacing create a calm interface that doesn't compete for attention
+- **Red accent thread** (#D7263D) — a single, confident accent color inspired by Ariadne's red thread, used sparingly for primary actions and navigation cues
 
 ---
 
@@ -90,12 +114,13 @@ Now you have a structured thread describing:
 - your goal
 - what you were doing
 - what comes next
+- where you need to go (if a location was mentioned)
 
 You handle the interruption.
 
 Later, when you return, you open Thread and tap your latest thread.
 
-There it is: the context you lost, reconstructed in seconds.
+There it is: the context you lost, reconstructed in seconds. If the thread involves a physical location, you can tap **"Start directions"** and navigate there instantly.
 
 ---
 
@@ -109,6 +134,7 @@ Thread is designed for anyone who experiences frequent context switching or cogn
 | Students | Capture fragmented research sessions and resume later |
 | People experiencing cognitive fatigue | Offload mental reconstruction to an external system |
 | Older adults | External memory support for daily tasks |
+| People running errands | Capture location-based tasks and navigate back with one tap |
 
 Thread is **not a medical tool** — it is an experiment in **AI-assisted cognitive continuity**.
 
@@ -124,8 +150,37 @@ Before multimodal models like Gemini, reconstructing a train of thought from mix
 | Text and images processed separately | Unified multimodal reasoning |
 | Keyword extraction | Context synthesis across fragments |
 | Generic summaries | Structured reconstruction of intent |
+| No location awareness | Automatic location extraction from context |
 
-Gemini can analyze **text and images together in a single prompt**, enabling the model to infer goals, steps, and context from messy input.
+Gemini can analyze **text and images together in a single prompt**, enabling the model to infer goals, steps, context, and even physical locations from messy input.
+
+---
+
+# Roadmap
+
+These features are planned for upcoming development:
+
+## Clarity Mode
+
+A dedicated tab for cognitive support beyond thread reconstruction. Users will be able to paste complex text or upload a screenshot of a document, email, or message, and receive:
+
+- A **1-line summary** of the content
+- **Bullet-point breakdown** of key information
+- The **key action required** highlighted prominently
+- An optional **draft reply** ready to copy
+- **Read Aloud** using the device's text-to-speech
+- **Language selector** for multilingual output
+- **Larger Text toggle** for enhanced readability
+
+Designed for users dealing with dense emails, legal documents, medical instructions, or any text that feels overwhelming.
+
+## Day, Night, and Sensitivity Modes
+
+Three visual themes tailored to different contexts and cognitive needs:
+
+- **Day mode** — lighter palette for bright environments and outdoor use
+- **Night mode** — the current dark Greek-inspired palette, optimized for low-light and reduced eye strain
+- **Sensitivity mode** — ultra-low contrast, muted colors, and minimal visual stimulation for users experiencing migraines, sensory overload, or heightened light sensitivity
 
 ---
 
