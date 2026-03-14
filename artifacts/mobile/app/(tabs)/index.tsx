@@ -14,12 +14,13 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Colors from "@/constants/colors";
+import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { KeyboardAwareScrollViewCompat } from "@/components/KeyboardAwareScrollViewCompat";
 import { useThreads } from "@/context/ThreadContext";
 
 export default function CaptureScreen() {
   const insets = useSafeAreaInsets();
-  const tabBarHeight = insets.bottom + 49;
+  const tabBarHeight = insets.bottom + TAB_BAR_HEIGHT;
   const { parseThought, loadDemoThread, isParsing, parseError, clearError, activeThread } = useThreads();
   const [text, setText] = useState("");
   const inputRef = useRef<TextInput>(null);

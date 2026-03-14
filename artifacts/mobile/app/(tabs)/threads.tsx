@@ -10,12 +10,13 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Colors from "@/constants/colors";
+import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { ThreadCard } from "@/components/ThreadCard";
 import { useThreads } from "@/context/ThreadContext";
 
 export default function ThreadsScreen() {
   const insets = useSafeAreaInsets();
-  const tabBarHeight = insets.bottom + 49;
+  const tabBarHeight = insets.bottom + TAB_BAR_HEIGHT;
   const { threads, activeThread, setActiveThread, deleteThread } = useThreads();
 
   const topInset = Platform.OS === "web" ? 67 : insets.top;
