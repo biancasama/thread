@@ -94,14 +94,16 @@ router.post("/thread/parse", async (req, res) => {
         parts.push({ text: fragment.content });
       } else if (fragment.type === "image") {
         const imageData = parseDataUrl(fragment.content);
-        if (imageData) {
-          parts.push({
-            inlineData: {
-              mimeType: imageData.mimeType,
-              data: imageData.data,
-            },
-          });
+        if (!imageData) {
+          res.status(400).json({ error: "Invalid image fragment: unsupported format, bad data URL, or exceeds 5MB limit" });
+          return;
         }
+        parts.push({
+          inlineData: {
+            mimeType: imageData.mimeType,
+            data: imageData.data,
+          },
+        });
       }
     }
 
