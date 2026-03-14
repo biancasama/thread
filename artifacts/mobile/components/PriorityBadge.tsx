@@ -29,10 +29,10 @@ export function PriorityBadge({ priority, size = "md" }: PriorityBadgeProps) {
       style={[
         styles.badge,
         {
-          backgroundColor: color + "1A",
+          backgroundColor: Colors.light.backgroundTertiary,
           borderColor: color + "40",
           paddingHorizontal: isSmall ? 8 : 12,
-          paddingVertical: isSmall ? 3 : 5,
+          paddingVertical: isSmall ? 4 : 6,
         },
       ]}
     >
@@ -40,7 +40,7 @@ export function PriorityBadge({ priority, size = "md" }: PriorityBadgeProps) {
       <Text
         style={[
           styles.label,
-          { color, fontSize: isSmall ? 11 : 12 },
+          { color: Colors.light.text, fontSize: isSmall ? 11 : 12 },
         ]}
       >
         {LABELS[priority]}
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   label: {
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "Lexend_600SemiBold",
     letterSpacing: 0.2,
   },
 });

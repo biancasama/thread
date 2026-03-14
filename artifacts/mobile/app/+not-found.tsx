@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   title: {
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "Lexend_600SemiBold",
     fontSize: 18,
     color: Colors.light.text,
   },
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   linkText: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Lexend_500Medium",
     fontSize: 15,
     color: "#FFFFFF",
   },

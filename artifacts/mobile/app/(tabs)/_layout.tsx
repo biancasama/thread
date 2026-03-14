@@ -44,7 +44,7 @@ function ClassicTabLayout() {
         tabBarBackground: () =>
           isIOS ? (
             <BlurView
-              intensity={100}
+              intensity={80}
               tint="dark"
               style={StyleSheet.absoluteFill}
             />
@@ -57,7 +57,7 @@ function ClassicTabLayout() {
             />
           ) : null,
         tabBarLabelStyle: {
-          fontFamily: "Inter_500Medium",
+          fontFamily: "Lexend_500Medium",
           fontSize: 11,
         },
       }}

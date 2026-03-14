@@ -123,9 +123,9 @@ export default function CaptureScreen() {
       </View>
 
       <View style={styles.hero}>
-        <Text style={styles.headline}>Lost your train of thought?</Text>
-        <Text style={styles.subheadline}>Find the thread.</Text>
-        <Text style={styles.tagline}>Recover the thread of your thinking</Text>
+        <Text style={styles.headline}>
+          Lost in the labyrinth of interruptions?
+        </Text>
       </View>
 
       {activeThread && (
@@ -147,6 +147,7 @@ export default function CaptureScreen() {
       )}
 
       <View style={styles.inputCard}>
+        <Text style={styles.inputCardTitle}>What were you doing?</Text>
         <TextInput
           ref={inputRef}
           style={styles.textInput}
@@ -155,7 +156,7 @@ export default function CaptureScreen() {
             if (parseError) clearError();
             setText(t);
           }}
-          placeholder="What were you working on?"
+          placeholder="What were you doing?"
           placeholderTextColor={Colors.light.textTertiary}
           multiline
           numberOfLines={6}
@@ -179,41 +180,34 @@ export default function CaptureScreen() {
                 <Pressable
                   style={styles.imageRemoveBtn}
                   onPress={() => removeImage(i)}
-                  hitSlop={8}
                 >
-                  <Feather name="x" size={10} color="#FFFFFF" />
+                  <View style={styles.imageRemoveBtnInner}>
+                    <Feather name="x" size={10} color="#FFFFFF" />
+                  </View>
                 </Pressable>
               </View>
             ))}
           </ScrollView>
         )}
 
-        <View style={styles.inputFooter}>
-          <Pressable
-            style={[styles.attachBtn, images.length >= 4 && styles.attachBtnDisabled]}
-            onPress={handlePickImage}
-            disabled={images.length >= 4}
-            hitSlop={8}
-          >
-            <Feather
-              name="image"
-              size={16}
-              color={images.length >= 4 ? Colors.light.textTertiary : Colors.light.tint}
-            />
-            <Text style={[
-              styles.attachLabel,
-              images.length >= 4 && { color: Colors.light.textTertiary },
-            ]}>
-              {images.length > 0 ? `${images.length}/4` : "Add image"}
-            </Text>
-          </Pressable>
+        <Pressable
+          style={[styles.attachBtn, images.length >= 4 && styles.attachBtnDisabled]}
+          onPress={handlePickImage}
+          disabled={images.length >= 4}
+          hitSlop={8}
+        >
+          <Feather
+            name="image"
+            size={16}
+            color={images.length >= 4 ? Colors.light.textTertiary : Colors.light.tint}
+          />
           <Text style={[
-            styles.charCount,
-            charCount > 900 && { color: Colors.light.priorityHigh }
+            styles.attachLabel,
+            images.length >= 4 && { color: Colors.light.textTertiary },
           ]}>
-            {charCount}/1000
+            {images.length > 0 ? `${images.length}/4` : "Add image"}
           </Text>
-        </View>
+        </Pressable>
       </View>
 
       {parseError && (
@@ -245,12 +239,8 @@ export default function CaptureScreen() {
       </Animated.View>
 
       <Pressable style={styles.demoBtn} onPress={handleDemo}>
-        <Feather name="play-circle" size={14} color={Colors.light.textSecondary} />
-        <Text style={styles.demoBtnText}>Load demo</Text>
+        <Text style={styles.demoBtnText}>Load demo thread</Text>
       </Pressable>
-
-      <Text style={styles.helperHint}>Context switching? Follow the thread back.</Text>
-      <Text style={styles.mythHook}>Inspired by Ariadne, who gave Theseus a thread to escape the labyrinth</Text>
     </KeyboardAwareScrollViewCompat>
   );
 }
@@ -262,7 +252,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 24,
-    gap: 20,
+    gap: 24,
   },
   header: {
     marginBottom: 0,
@@ -273,7 +263,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   appName: {
-    fontFamily: "Inter_700Bold",
+    fontFamily: "Lexend_700Bold",
     fontSize: 30,
     color: Colors.light.text,
     letterSpacing: -0.5,
@@ -282,17 +272,11 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   headline: {
-    fontFamily: "Inter_700Bold",
+    fontFamily: "Lexend_600SemiBold",
     fontSize: 22,
     color: Colors.light.text,
-    lineHeight: 30,
+    lineHeight: 32,
     letterSpacing: -0.3,
-  },
-  subheadline: {
-    fontFamily: "Inter_500Medium",
-    fontSize: 18,
-    color: Colors.light.tint,
-    lineHeight: 26,
   },
   recoverBanner: {
     backgroundColor: Colors.light.backgroundSecondary,
@@ -304,6 +288,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    minHeight: 56,
   },
   recoverLeft: {
     flexDirection: "row",
@@ -317,7 +302,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.tint,
   },
   recoverLabel: {
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "Lexend_600SemiBold",
     fontSize: 14,
     color: Colors.light.tint,
   },
@@ -329,7 +314,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   recoverTitle: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Lexend_400Regular",
     fontSize: 13,
     color: Colors.light.textSecondary,
     flex: 1,
@@ -341,17 +326,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.light.border,
     padding: 20,
+    gap: 12,
+  },
+  inputCardTitle: {
+    fontFamily: "Lexend_600SemiBold",
+    fontSize: 16,
+    color: Colors.light.text,
   },
   textInput: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Lexend_400Regular",
     fontSize: 16,
     color: Colors.light.text,
     lineHeight: 26,
-    minHeight: 140,
+    minHeight: 120,
     textAlignVertical: "top",
   },
   imageRow: {
-    marginTop: 14,
+    marginTop: 4,
   },
   imageRowContent: {
     gap: 8,
@@ -367,45 +358,40 @@ const styles = StyleSheet.create({
   },
   imageRemoveBtn: {
     position: "absolute",
-    top: -6,
-    right: -6,
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: Colors.light.tint,
+    top: -14,
+    right: -14,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     alignItems: "center",
     justifyContent: "center",
   },
-  inputFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  imageRemoveBtnInner: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: Colors.light.tint,
     alignItems: "center",
-    marginTop: 12,
-    paddingTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: Colors.light.border,
+    justifyContent: "center",
   },
   attachBtn: {
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
     borderRadius: 8,
     backgroundColor: Colors.light.tint + "15",
+    alignSelf: "flex-start",
+    minHeight: 56,
   },
   attachBtnDisabled: {
     backgroundColor: Colors.light.border + "40",
   },
   attachLabel: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Lexend_500Medium",
     fontSize: 13,
     color: Colors.light.tint,
-  },
-  charCount: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 12,
-    color: Colors.light.textTertiary,
   },
   errorBox: {
     flexDirection: "row",
@@ -418,7 +404,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.light.priorityHigh + "30",
   },
   errorText: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Lexend_400Regular",
     fontSize: 14,
     color: Colors.light.priorityHigh,
     flex: 1,
@@ -427,7 +413,8 @@ const styles = StyleSheet.create({
   captureBtn: {
     backgroundColor: Colors.light.tint,
     borderRadius: 16,
-    paddingVertical: 18,
+    minHeight: 56,
+    paddingVertical: 16,
     paddingHorizontal: 24,
     flexDirection: "row",
     alignItems: "center",
@@ -457,7 +444,7 @@ const styles = StyleSheet.create({
     borderRadius: 1,
   },
   captureBtnText: {
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "Lexend_600SemiBold",
     fontSize: 17,
     color: "#FFFFFF",
   },
@@ -465,34 +452,14 @@ const styles = StyleSheet.create({
     color: Colors.light.textTertiary,
   },
   demoBtn: {
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 6,
-    paddingVertical: 10,
+    paddingVertical: 14,
+    minHeight: 56,
   },
   demoBtnText: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 14,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 15,
     color: Colors.light.textSecondary,
-  },
-  tagline: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 14,
-    color: Colors.light.textSecondary,
-    marginTop: 4,
-  },
-  helperHint: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 13,
-    color: Colors.light.textTertiary,
-    textAlign: "center",
-  },
-  mythHook: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 12,
-    color: Colors.light.textTertiary,
-    textAlign: "center",
-    marginTop: 4,
   },
 });

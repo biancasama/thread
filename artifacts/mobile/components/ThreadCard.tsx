@@ -125,17 +125,18 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.light.backgroundSecondary,
     borderRadius: 16,
-    padding: 18,
+    padding: 20,
     borderWidth: 1,
     borderColor: Colors.light.border,
     position: "relative",
+    minHeight: 56,
   },
   cardActive: {
     borderColor: Colors.light.tint + "60",
     backgroundColor: Colors.light.backgroundTertiary,
   },
   cardCompact: {
-    padding: 14,
+    padding: 16,
   },
   header: {
     flexDirection: "row",
@@ -149,22 +150,26 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   time: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Lexend_400Regular",
     fontSize: 12,
     color: Colors.light.textTertiary,
   },
   deleteBtn: {
-    padding: 4,
+    padding: 8,
+    minWidth: 56,
+    minHeight: 56,
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "Lexend_600SemiBold",
     fontSize: 16,
     color: Colors.light.text,
     lineHeight: 24,
     marginBottom: 6,
   },
   goal: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Lexend_400Regular",
     fontSize: 14,
     color: Colors.light.textSecondary,
     lineHeight: 22,
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.tint,
   },
   step: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Lexend_500Medium",
     fontSize: 13,
     color: Colors.light.tint,
     flex: 1,

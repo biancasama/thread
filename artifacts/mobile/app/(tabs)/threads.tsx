@@ -27,7 +27,7 @@ export default function ThreadsScreen() {
       <LabyrinthLogo size={56} />
       <Text style={styles.emptyTitle}>No threads yet</Text>
       <Text style={styles.emptyBody}>
-        Capture your first thought and follow the thread back — no matter how deep the labyrinth goes.
+        Capture your first thought to begin.
       </Text>
     </View>
   );
@@ -83,13 +83,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   headerTitle: {
-    fontFamily: "Inter_700Bold",
+    fontFamily: "Lexend_700Bold",
     fontSize: 30,
     color: Colors.light.text,
     letterSpacing: -0.5,
   },
   headerSubtitle: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Lexend_400Regular",
     fontSize: 14,
     color: Colors.light.textSecondary,
     marginTop: 4,
@@ -105,13 +105,13 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   emptyTitle: {
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "Lexend_600SemiBold",
     fontSize: 20,
     color: Colors.light.text,
     textAlign: "center",
   },
   emptyBody: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Lexend_400Regular",
     fontSize: 15,
     color: Colors.light.textSecondary,
     textAlign: "center",
