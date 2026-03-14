@@ -1,4 +1,3 @@
-import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import {
@@ -13,6 +12,7 @@ import Colors from "@/constants/colors";
 import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { ThreadCard } from "@/components/ThreadCard";
 import { useThreads } from "@/context/ThreadContext";
+import { LabyrinthLogo } from "@/components/LabyrinthLogo";
 
 export default function ThreadsScreen() {
   const insets = useSafeAreaInsets();
@@ -24,12 +24,10 @@ export default function ThreadsScreen() {
 
   const renderEmpty = () => (
     <View style={styles.emptyState}>
-      <View style={styles.emptyIconWrap}>
-        <Feather name="git-merge" size={28} color={Colors.light.tint} />
-      </View>
+      <LabyrinthLogo size={56} />
       <Text style={styles.emptyTitle}>No threads yet</Text>
       <Text style={styles.emptyBody}>
-        Capture your first thought to get started. Your structured threads will appear here.
+        Capture your first thought and follow the thread back — no matter how deep the labyrinth goes.
       </Text>
     </View>
   );
@@ -62,7 +60,7 @@ export default function ThreadsScreen() {
           styles.list,
           { paddingBottom: tabBarHeight + 24 + bottomPad },
         ]}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
         scrollEnabled={!!threads.length}
         showsVerticalScrollIndicator={false}
         keyboardDismissMode="interactive"
@@ -78,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   header: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: Colors.light.border,
@@ -86,46 +84,37 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontFamily: "Inter_700Bold",
-    fontSize: 28,
+    fontSize: 30,
     color: Colors.light.text,
     letterSpacing: -0.5,
   },
   headerSubtitle: {
     fontFamily: "Inter_400Regular",
-    fontSize: 13,
+    fontSize: 14,
     color: Colors.light.textSecondary,
-    marginTop: 2,
+    marginTop: 4,
   },
   list: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingTop: 16,
   },
   emptyState: {
     alignItems: "center",
     paddingTop: 80,
     paddingHorizontal: 40,
-    gap: 12,
-  },
-  emptyIconWrap: {
-    width: 64,
-    height: 64,
-    borderRadius: 20,
-    backgroundColor: Colors.light.tint + "15",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 4,
+    gap: 16,
   },
   emptyTitle: {
     fontFamily: "Inter_600SemiBold",
-    fontSize: 18,
+    fontSize: 20,
     color: Colors.light.text,
     textAlign: "center",
   },
   emptyBody: {
     fontFamily: "Inter_400Regular",
-    fontSize: 14,
+    fontSize: 15,
     color: Colors.light.textSecondary,
     textAlign: "center",
-    lineHeight: 22,
+    lineHeight: 24,
   },
 });

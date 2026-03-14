@@ -1,24 +1,24 @@
-const accent = "#7C6EEA";
-const accentLight = "#A899F5";
-const accentDark = "#5A50B0";
+const accent = "#D94A4A";
+const accentLight = "#E87070";
+const accentDark = "#A83838";
 
 export default {
   light: {
-    text: "#0F0E17",
-    textSecondary: "#6B7280",
-    textTertiary: "#9CA3AF",
-    background: "#F8F7FF",
-    backgroundSecondary: "#FFFFFF",
-    backgroundTertiary: "#F0EFF8",
-    border: "#E5E3F0",
+    text: "#F0ECE2",
+    textSecondary: "#BDB8B0",
+    textTertiary: "#908B84",
+    background: "#131127",
+    backgroundSecondary: "#1B1935",
+    backgroundTertiary: "#242240",
+    border: "#2E2C4A",
     tint: accent,
     tintLight: accentLight,
     tintDark: accentDark,
-    tabIconDefault: "#9CA3AF",
+    tabIconDefault: "#908B84",
     tabIconSelected: accent,
     priorityHigh: "#EF4444",
     priorityMedium: "#F59E0B",
     priorityLow: "#10B981",
-    cardShadow: "rgba(124, 110, 234, 0.08)",
+    cardShadow: "rgba(0, 0, 0, 0.4)",
   },
 };
