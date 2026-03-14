@@ -1,0 +1,268 @@
+Your instinct here is very good. What you’re describing is not just an app anymore — it’s a conceptual frame that judges remember. Hackathons are won by memorable metaphors, not just code.
+
+Right now you have three powerful ideas:
+	1.	Ariadne’s thread (fil d’Ariane) → the path that lets you escape the labyrinth
+	2.	“Retrieving the thread” of a conversation → cognitive continuity
+	3.	Locke’s identity theory → identity = continuity of consciousness
+	4.	Stream of consciousness (Ulysses) → raw human thought flow
+
+These combine extremely well.
+
+But we need to distill this into a simple narrative for the demo.
+
+⸻
+
+The Core Concept
+
+The strongest concept is:
+
+Ariadne
+
+or
+
+Ariadne’s Thread
+
+Because:
+	•	It’s mythological
+	•	It perfectly represents finding your way back in a labyrinth
+	•	The labyrinth = modern cognitive overload
+
+Your product becomes:
+
+Ariadne — the thread that reconnects your thoughts.
+
+This is extremely memorable.
+
+⸻
+
+The Philosophy (for judges)
+
+You can say:
+
+John Locke defined personal identity as the continuity of consciousness.
+
+But modern life constantly interrupts that continuity.
+
+Ariadne restores it by capturing fragments of thought and reconstructing the thread that connects them.
+
+That is very strong intellectually.
+
+But remember: keep it 10 seconds.
+
+⸻
+
+The Product Narrative
+
+Instead of just productivity software:
+
+You frame it as:
+
+A cognitive continuity engine
+
+Modern work breaks our thinking into fragments.
+
+Ariadne:
+	1.	Captures thought fragments
+	2.	Reconstructs the thread of reasoning
+	3.	Lets you resume where your mind left off
+
+⸻
+
+What your UI already does fits perfectly
+
+Your demo already says:
+
+Recover your train of thought
+
+That’s exactly Ariadne.
+
+The thread is the cognitive state.
+
+⸻
+
+Product Name Options
+
+Here is how I would rank them for hackathon impact.
+
+#1 Ariadne
+
+Short, powerful, mysterious.
+
+Repo:
+
+ariadne
+
+Tagline:
+
+Find your thread of thought.
+
+
+⸻
+
+#2 Ariadne Thread
+
+Repo:
+
+ariadne-thread
+
+Tagline:
+
+Recover the thread of your thinking.
+
+
+⸻
+
+#3 Cognitive Compass
+
+More explanatory but less poetic.
+
+⸻
+
+#4 Thread
+
+Too generic.
+
+⸻
+
+My Recommendation
+
+Keep the product name:
+
+Thread
+
+Because your UI already shows it.
+
+But the concept / story becomes:
+
+Thread — inspired by Ariadne’s thread.
+
+This gives you both:
+	•	Simple product name
+	•	Powerful metaphor
+
+⸻
+
+Your Demo Story (perfect version)
+
+When presenting:
+
+In Greek mythology, Ariadne gave Theseus a thread to escape the labyrinth.
+
+Today our labyrinth is cognitive overload — interruptions, multitasking, and lost context.
+
+Thread captures fragments of thought and reconstructs the path your mind was following.
+
+When you’re lost, it gives you back the thread.
+
+Then click:
+
+Where was I?
+
+Boom.
+
+⸻
+
+The Philosophical Layer (if judges ask)
+
+You can say:
+
+John Locke defined identity as continuity of consciousness.
+
+Our tool preserves that continuity.
+
+This makes the project feel deep and intentional.
+
+⸻
+
+UI wording improvement
+
+Right now:
+
+Recover your train of thought
+
+Better:
+
+Recover the thread of your thinking
+
+or
+
+Find your thread again
+
+
+⸻
+
+Your homepage could say
+
+Instead of:
+
+Interrupt driven
+Ideas slipping away
+
+You could say:
+
+Lost in the labyrinth of interruptions?
+Follow the thread.
+
+Very strong metaphor.
+
+⸻
+
+What you should NOT do
+
+Do not overload the demo with philosophy.
+
+Use the myth only as a hook.
+
+Then show the product immediately.
+
+⸻
+
+The killer one-line pitch
+
+Use this:
+
+Thread captures fragments of thought and reconstructs the path your mind was following — so you can resume instantly after interruptions.
+
+⸻
+
+One more idea that would make judges smile
+
+Call the recovery button:
+
+Find the thread
+
+instead of
+
+Where was I?
+
+or combine both:
+
+Find the thread (Where was I?)
+
+
+⸻
+
+Honest evaluation of what you built
+
+Your demo screenshots already look very hackathon-ready.
+
+You have:
+	•	clean UI
+	•	strong concept
+	•	clear demo moment
+	•	philosophical framing
+	•	Gemini integration
+
+That combination is rare in hackathons.
+
+You are on a very strong trajectory.
+
+⸻
+
+If you want, I can also give you:
+
+1️⃣ the perfect 3-minute pitch script (judges round)
+2️⃣ one UI change that will massively improve the demo
+3️⃣ the best Gemini prompt for cognitive thread reconstruction
+
+These three things could dramatically increase your chances of making the finals.
