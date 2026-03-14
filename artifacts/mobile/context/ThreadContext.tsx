@@ -42,14 +42,14 @@ const STORAGE_KEY = "@thread_threads";
 
 const DEMO_THREAD: Thread = {
   id: "demo-" + Date.now(),
-  thread_title: "Hackathon Project - Thread",
-  goal: "Build an AI external working memory assistant",
-  current_step: "Preparing demo pitch",
-  important_context: "The user is finalizing the hackathon demo",
+  thread_title: "Deep in the labyrinth — refactoring the auth module",
+  goal: "Untangle the authentication flow before the sprint review, without breaking existing sessions",
+  current_step: "Halfway through extracting the token refresh logic into a standalone service — got interrupted by a production alert",
+  important_context: "The labyrinth of this codebase has three intertwined auth paths. Like Ariadne's thread guiding Theseus, you were following the thread through the OAuth callback handler when the interruption hit. Two tests are currently red. The PR is in draft.",
   next_actions: [
-    "Write 15-second hook",
-    "Prepare demo artifacts",
-    "Record submission video",
+    "Pick up the thread: reopen the token-refresh service file and finish extracting the retry logic",
+    "Run the two failing tests to confirm the thread hasn't frayed",
+    "Update the PR description so the reviewer can follow the same thread through the changes",
   ],
   priority: "high",
   raw_input: "Demo thread loaded",

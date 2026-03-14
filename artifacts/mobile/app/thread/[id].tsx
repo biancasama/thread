@@ -70,7 +70,6 @@ export default function ThreadDetailScreen() {
 
   return (
     <View style={[styles.container, { paddingTop: topInset }]}>
-      {/* Header */}
       <View style={styles.header}>
         <Pressable onPress={() => router.back()} style={styles.headerBack} hitSlop={8}>
           <Feather name="arrow-left" size={22} color={Colors.light.text} />
@@ -85,12 +84,10 @@ export default function ThreadDetailScreen() {
         contentContainerStyle={[styles.scrollContent, { paddingBottom: bottomInset + 24 }]}
         showsVerticalScrollIndicator={false}
       >
-        {/* Title */}
         <View style={styles.titleSection}>
           <Text style={styles.threadTitle}>{thread.thread_title}</Text>
         </View>
 
-        {/* WHERE WAS I — Recovery card */}
         <Pressable
           style={[styles.recoveryTrigger, showRecovery && styles.recoveryTriggerActive]}
           onPress={toggleRecovery}
@@ -98,14 +95,17 @@ export default function ThreadDetailScreen() {
           <View style={styles.recoveryTriggerLeft}>
             <View style={[styles.recoveryIcon, showRecovery && styles.recoveryIconActive]}>
               <Feather
-                name={showRecovery ? "refresh-ccw" : "refresh-ccw"}
+                name="refresh-ccw"
                 size={16}
                 color={showRecovery ? "#FFFFFF" : Colors.light.tint}
               />
             </View>
-            <Text style={[styles.recoveryLabel, showRecovery && styles.recoveryLabelActive]}>
-              Where was I?
-            </Text>
+            <View>
+              <Text style={styles.recoveryLabel}>
+                Find the thread
+              </Text>
+              <Text style={styles.recoverySubLabel}>Where was I?</Text>
+            </View>
           </View>
           <Feather
             name={showRecovery ? "chevron-up" : "chevron-down"}
@@ -128,7 +128,6 @@ export default function ThreadDetailScreen() {
           </Animated.View>
         )}
 
-        {/* Thread Details */}
         <Section title="Goal" icon="target">
           <Text style={styles.bodyText}>{thread.goal}</Text>
         </Section>
@@ -151,7 +150,6 @@ export default function ThreadDetailScreen() {
           </View>
         </Section>
 
-        {/* Original input */}
         {thread.raw_input && thread.raw_input !== "Demo thread loaded" && (
           <Section title="Original Thought" icon="message-square">
             <Text style={styles.rawInputText}>{thread.raw_input}</Text>
@@ -249,50 +247,61 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   notFoundText: {
-    fontFamily: "Inter_500Medium",
-    fontSize: 16,
+    fontFamily: "Lexend_500Medium",
+    fontSize: 17,
     color: Colors.light.textSecondary,
     marginBottom: 16,
   },
   backBtn: {
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 14,
     backgroundColor: Colors.light.tint,
-    borderRadius: 10,
+    borderRadius: 12,
+    minHeight: 56,
+    alignItems: "center",
+    justifyContent: "center",
   },
   backBtnText: {
-    fontFamily: "Inter_600SemiBold",
-    fontSize: 14,
+    fontFamily: "Lexend_600SemiBold",
+    fontSize: 15,
     color: "#FFFFFF",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: Colors.light.border,
   },
   headerBack: {
-    padding: 4,
+    padding: 8,
+    minWidth: 56,
+    minHeight: 56,
+    alignItems: "center",
+    justifyContent: "center",
   },
   headerDelete: {
-    padding: 4,
+    padding: 8,
+    minWidth: 56,
+    minHeight: 56,
+    alignItems: "center",
+    justifyContent: "center",
   },
   scrollContent: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    gap: 16,
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    gap: 20,
   },
   titleSection: {
     marginBottom: 4,
   },
   threadTitle: {
-    fontFamily: "Inter_700Bold",
-    fontSize: 24,
+    fontFamily: "Lexend_700Bold",
+    fontSize: 26,
     color: Colors.light.text,
-    lineHeight: 34,
+    lineHeight: 36,
     letterSpacing: -0.3,
   },
   recoveryTrigger: {
@@ -302,12 +311,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.backgroundSecondary,
     borderRadius: 16,
     padding: 16,
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: Colors.light.tint + "30",
+    minHeight: 56,
   },
   recoveryTriggerActive: {
     borderColor: Colors.light.tint,
-    backgroundColor: Colors.light.tint + "08",
+    backgroundColor: Colors.light.tint + "0A",
   },
   recoveryTriggerLeft: {
     flexDirection: "row",
@@ -315,8 +325,8 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   recoveryIcon: {
-    width: 32,
-    height: 32,
+    width: 34,
+    height: 34,
     borderRadius: 10,
     backgroundColor: Colors.light.tint + "15",
     alignItems: "center",
@@ -326,26 +336,29 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.tint,
   },
   recoveryLabel: {
-    fontFamily: "Inter_600SemiBold",
-    fontSize: 15,
+    fontFamily: "Lexend_600SemiBold",
+    fontSize: 16,
     color: Colors.light.tint,
   },
-  recoveryLabelActive: {
-    color: Colors.light.tint,
+  recoverySubLabel: {
+    fontFamily: "Lexend_400Regular",
+    fontSize: 12,
+    color: Colors.light.textTertiary,
+    marginTop: 2,
   },
   recoveryCard: {
     backgroundColor: Colors.light.backgroundSecondary,
     borderRadius: 20,
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: Colors.light.tint + "25",
     overflow: "hidden",
   },
   recovery: {
-    padding: 20,
+    padding: 24,
     gap: 0,
   },
   recoveryHeadline: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Lexend_500Medium",
     fontSize: 12,
     color: Colors.light.textTertiary,
     textTransform: "uppercase",
@@ -353,50 +366,50 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   recoveryValue: {
-    fontFamily: "Inter_700Bold",
-    fontSize: 18,
+    fontFamily: "Lexend_700Bold",
+    fontSize: 19,
     color: Colors.light.text,
-    lineHeight: 26,
+    lineHeight: 28,
     marginBottom: 16,
   },
   recoveryDivider: {
     height: 1,
     backgroundColor: Colors.light.border,
-    marginVertical: 14,
+    marginVertical: 16,
   },
   recoveryRow: {
-    marginBottom: 10,
+    marginBottom: 14,
   },
   recoveryRowLabel: {
-    fontFamily: "Inter_500Medium",
-    fontSize: 11,
+    fontFamily: "Lexend_500Medium",
+    fontSize: 12,
     color: Colors.light.textTertiary,
     textTransform: "uppercase",
     letterSpacing: 0.6,
-    marginBottom: 3,
+    marginBottom: 4,
   },
   recoveryRowValue: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 14,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 15,
     color: Colors.light.text,
-    lineHeight: 21,
+    lineHeight: 24,
   },
   recoveryNextLabel: {
-    fontFamily: "Inter_600SemiBold",
-    fontSize: 13,
+    fontFamily: "Lexend_600SemiBold",
+    fontSize: 14,
     color: Colors.light.textSecondary,
-    marginBottom: 10,
+    marginBottom: 12,
   },
   recoveryAction: {
     flexDirection: "row",
     alignItems: "flex-start",
     gap: 12,
-    marginBottom: 10,
+    marginBottom: 14,
   },
   recoveryActionNum: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
     backgroundColor: Colors.light.tint,
     alignItems: "center",
     justifyContent: "center",
@@ -404,72 +417,73 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   recoveryActionNumText: {
-    fontFamily: "Inter_700Bold",
-    fontSize: 11,
+    fontFamily: "Lexend_700Bold",
+    fontSize: 12,
     color: "#FFFFFF",
   },
   recoveryActionText: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 14,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 15,
     color: Colors.light.text,
-    lineHeight: 22,
+    lineHeight: 24,
     flex: 1,
   },
   section: {
     backgroundColor: Colors.light.backgroundSecondary,
     borderRadius: 16,
-    padding: 16,
+    padding: 20,
     borderWidth: 1,
     borderColor: Colors.light.border,
-    gap: 10,
+    gap: 14,
   },
   sectionHeader: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 7,
+    gap: 8,
   },
   sectionTitle: {
-    fontFamily: "Inter_600SemiBold",
-    fontSize: 12,
+    fontFamily: "Lexend_600SemiBold",
+    fontSize: 13,
     color: Colors.light.tint,
     textTransform: "uppercase",
     letterSpacing: 0.7,
   },
   bodyText: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 14,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 15,
     color: Colors.light.text,
-    lineHeight: 22,
+    lineHeight: 24,
   },
   currentStepBox: {
-    backgroundColor: Colors.light.tint + "0F",
-    borderRadius: 10,
-    padding: 12,
+    backgroundColor: Colors.light.tint + "12",
+    borderRadius: 12,
+    padding: 16,
     borderLeftWidth: 3,
     borderLeftColor: Colors.light.tint,
   },
   currentStepText: {
-    fontFamily: "Inter_500Medium",
-    fontSize: 14,
+    fontFamily: "Lexend_500Medium",
+    fontSize: 15,
     color: Colors.light.text,
-    lineHeight: 22,
+    lineHeight: 24,
   },
   actionsList: {
-    gap: 8,
+    gap: 10,
   },
   actionItem: {
     flexDirection: "row",
     alignItems: "flex-start",
     gap: 12,
-    paddingVertical: 4,
+    paddingVertical: 6,
+    minHeight: 56,
   },
   actionItemDone: {
     opacity: 0.5,
   },
   actionCheck: {
-    width: 24,
-    height: 24,
-    borderRadius: 7,
+    width: 28,
+    height: 28,
+    borderRadius: 8,
     borderWidth: 2,
     borderColor: Colors.light.tint + "60",
     alignItems: "center",
@@ -482,15 +496,15 @@ const styles = StyleSheet.create({
     borderColor: Colors.light.priorityLow,
   },
   actionIndexText: {
-    fontFamily: "Inter_600SemiBold",
-    fontSize: 11,
+    fontFamily: "Lexend_600SemiBold",
+    fontSize: 12,
     color: Colors.light.tint,
   },
   actionText: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 14,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 15,
     color: Colors.light.text,
-    lineHeight: 22,
+    lineHeight: 24,
     flex: 1,
   },
   actionTextDone: {
@@ -498,10 +512,9 @@ const styles = StyleSheet.create({
     color: Colors.light.textTertiary,
   },
   rawInputText: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 13,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 14,
     color: Colors.light.textSecondary,
-    lineHeight: 21,
-    fontStyle: "italic",
+    lineHeight: 22,
   },
 });

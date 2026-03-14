@@ -94,9 +94,14 @@ artifacts-monorepo/
 - `EXPO_PUBLIC_DOMAIN` — Injected at build time for API URL routing
 
 ## Design
-- Color: Soft violet/indigo accent (#7C6EEA) on lavender-tinted background (#F8F7FF)
-- Typography: Inter (400, 500, 600, 700)
-- Custom app icon generated with AI
+- Direction: Premium, calm, minimal — designed for users with cognitive fatigue/ADHD
+- Color: Dark indigo background (#131127) with warm off-white text (#F0ECE2) and red thread accent (#C43A3A)
+- Logo: Simplified circular labyrinth SVG with one red thread path (`components/LabyrinthLogo.tsx`)
+- Typography: Inter (400, 500, 600, 700), increased sizes for mobile readability
+- Copy philosophy: Minimal text, strong visual hierarchy, primary action obvious within 2 seconds
+- Hero: "Lost your train of thought?" / "Find the thread." (red accent)
+- CTA: "Hold the thread" (primary), "Load demo" (secondary)
+- Single helper line instead of bullet lists
 - Priority badges: Red (high), Amber (medium), Green (low)
 - Liquid glass tab bar on iOS 26+
 - Tab bar height constant: `TAB_BAR_HEIGHT = 49` in `constants/layout.ts`

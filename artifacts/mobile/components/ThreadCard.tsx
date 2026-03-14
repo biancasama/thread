@@ -105,7 +105,7 @@ export function ThreadCard({
             </Text>
 
             <View style={styles.stepRow}>
-              <Feather name="git-commit" size={12} color={Colors.light.tint} style={styles.stepIcon} />
+              <View style={styles.stepDot} />
               <Text style={styles.step} numberOfLines={1}>
                 {thread.current_step}
               </Text>
@@ -125,30 +125,24 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.light.backgroundSecondary,
     borderRadius: 16,
-    padding: 16,
-    borderWidth: 1.5,
+    padding: 20,
+    borderWidth: 1,
     borderColor: Colors.light.border,
-    shadowColor: Colors.light.cardShadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 8,
-    elevation: 2,
     position: "relative",
+    minHeight: 56,
   },
   cardActive: {
-    borderColor: Colors.light.tint,
-    backgroundColor: "#FAF9FF",
-    shadowColor: Colors.light.tint,
-    shadowOpacity: 0.15,
+    borderColor: Colors.light.tint + "60",
+    backgroundColor: Colors.light.backgroundTertiary,
   },
   cardCompact: {
-    padding: 12,
+    padding: 16,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: 12,
   },
   headerLeft: {
     flexDirection: "row",
@@ -156,45 +150,52 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   time: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 11,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 12,
     color: Colors.light.textTertiary,
   },
   deleteBtn: {
-    padding: 4,
+    padding: 8,
+    minWidth: 56,
+    minHeight: 56,
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
-    fontFamily: "Inter_600SemiBold",
-    fontSize: 15,
+    fontFamily: "Lexend_600SemiBold",
+    fontSize: 16,
     color: Colors.light.text,
-    lineHeight: 22,
+    lineHeight: 24,
     marginBottom: 6,
   },
   goal: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 13,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 14,
     color: Colors.light.textSecondary,
-    lineHeight: 19,
-    marginBottom: 10,
+    lineHeight: 22,
+    marginBottom: 12,
   },
   stepRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+    gap: 8,
   },
-  stepIcon: {
-    marginTop: 1,
+  stepDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: Colors.light.tint,
   },
   step: {
-    fontFamily: "Inter_500Medium",
-    fontSize: 12,
+    fontFamily: "Lexend_500Medium",
+    fontSize: 13,
     color: Colors.light.tint,
     flex: 1,
   },
   activeDot: {
     position: "absolute",
-    top: 14,
-    right: 14,
+    top: 16,
+    right: 16,
     width: 8,
     height: 8,
     borderRadius: 4,

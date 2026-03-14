@@ -1,0 +1,79 @@
+Redesign the mobile UI of this app to feel like a premium, emotionally reassuring cognitive continuity tool inspired by Ariadne's thread.
+
+Product concept:
+This app helps users recover their train of thought after interruptions, multitasking, and cognitive overload. The design should communicate "finding your way back" through a labyrinth using a thread.
+
+Visual direction:
+- elegant, minimal, premium
+- dark indigo / midnight navy background
+- warm off-white text
+- one strong red accent color representing Ariadne's thread
+- subtle labyrinth-inspired geometry
+- calm, focused, not cluttered
+- designed for users with cognitive fatigue, ADHD, dyslexia, and attention problems
+
+Accessibility requirements:
+- prioritize readability and low cognitive load
+- use a highly legible font like Lexend or Atkinson Hyperlegible if available, otherwise Inter
+- increase font size and line height for mobile readability
+- strong contrast between text and background
+- avoid italics for important information
+- reduce the amount of text on screen
+- make the primary action obvious within 2 seconds
+
+Branding requirements:
+- use a simplified circular labyrinth logo with one red thread path as the main visual identity
+- do NOT use the detailed Ariadne woman illustration as the app logo
+- the detailed Ariadne illustration can be used only as a subtle decorative or onboarding element if needed
+- the labyrinth with a red path should be the main brand motif
+
+UX changes required:
+1. Simplify the hero section drastically
+   Replace the current copy with:
+   - Title: Thread
+   - Headline: Lost your train of thought?
+   - Subheadline: Find the thread.
+
+2. Remove or greatly reduce explanatory text.
+   Do not show long mythology explanations on the main capture screen.
+
+3. Make the capture card the main focus of the screen.
+   It should feel inviting, high contrast, and clearly interactive.
+
+4. Improve the CTA labels:
+   - Primary button: Hold the thread
+   - Secondary button: Load demo
+
+5. Remove the long bullet-point helper section at the bottom.
+   Replace it with at most one short helper line like:
+   "Add a screenshot to leave a breadcrumb."
+
+6. Make the layout feel lighter and easier to scan:
+   - more spacing
+   - fewer text blocks
+   - stronger visual hierarchy
+   - bigger headings
+   - clearer button states
+
+7. Add subtle thread-inspired visual details:
+   - a thin red path line
+   - soft red glow on active states
+   - minimal labyrinth pattern or circular motif in the background
+   - keep these subtle, not decorative clutter
+
+Mobile UI structure:
+- Header with logo + app name
+- Short hero copy
+- Main capture card with textarea
+- Primary CTA
+- Secondary CTA
+- Bottom nav if necessary, but keep it minimal
+
+Important:
+- do not over-design
+- do not create a busy fantasy aesthetic
+- do not use too much text
+- do not reduce readability for style
+- keep the result modern, calm, premium, and demo-ready
+
+Please update the current screen to match this direction and explain the key visual changes you made.

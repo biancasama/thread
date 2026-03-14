@@ -20,6 +20,7 @@ import Colors from "@/constants/colors";
 import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { KeyboardAwareScrollViewCompat } from "@/components/KeyboardAwareScrollViewCompat";
 import { useThreads, type Fragment } from "@/context/ThreadContext";
+import { LabyrinthLogo } from "@/components/LabyrinthLogo";
 
 export default function CaptureScreen() {
   const insets = useSafeAreaInsets();
@@ -108,20 +109,23 @@ export default function CaptureScreen() {
       contentContainerStyle={[
         styles.content,
         {
-          paddingTop: topInset + 24,
-          paddingBottom: tabBarHeight + 24 + bottomPad,
+          paddingTop: topInset + 32,
+          paddingBottom: tabBarHeight + 32 + bottomPad,
         },
       ]}
       bottomOffset={60}
     >
       <View style={styles.header}>
         <View style={styles.logoRow}>
-          <View style={styles.logoMark}>
-            <Feather name="git-merge" size={18} color="#FFFFFF" />
-          </View>
+          <LabyrinthLogo size={40} />
           <Text style={styles.appName}>Thread</Text>
         </View>
-        <Text style={styles.tagline}>Recover your train of thought</Text>
+      </View>
+
+      <View style={styles.hero}>
+        <Text style={styles.headline}>
+          Lost in the labyrinth of interruptions?
+        </Text>
       </View>
 
       {activeThread && (
@@ -130,20 +134,20 @@ export default function CaptureScreen() {
           onPress={() => router.push(`/thread/${activeThread.id}`)}
         >
           <View style={styles.recoverLeft}>
-            <Feather name="refresh-ccw" size={14} color={Colors.light.tint} />
-            <Text style={styles.recoverLabel}>Where was I?</Text>
+            <View style={styles.recoverDot} />
+            <Text style={styles.recoverLabel}>Find the thread</Text>
           </View>
           <View style={styles.recoverRight}>
             <Text style={styles.recoverTitle} numberOfLines={1}>
               {activeThread.thread_title}
             </Text>
-            <Feather name="chevron-right" size={14} color={Colors.light.textTertiary} />
+            <Feather name="chevron-right" size={16} color={Colors.light.textTertiary} />
           </View>
         </Pressable>
       )}
 
       <View style={styles.inputCard}>
-        <Text style={styles.inputLabel}>What are you thinking?</Text>
+        <Text style={styles.inputCardTitle}>What were you doing?</Text>
         <TextInput
           ref={inputRef}
           style={styles.textInput}
@@ -152,7 +156,7 @@ export default function CaptureScreen() {
             if (parseError) clearError();
             setText(t);
           }}
-          placeholder="Capture what you're thinking, planning, or trying to do. The more detail, the better your thread."
+          placeholder="What were you doing?"
           placeholderTextColor={Colors.light.textTertiary}
           multiline
           numberOfLines={6}
@@ -176,48 +180,34 @@ export default function CaptureScreen() {
                 <Pressable
                   style={styles.imageRemoveBtn}
                   onPress={() => removeImage(i)}
-                  hitSlop={8}
                 >
-                  <Feather name="x" size={10} color="#FFFFFF" />
+                  <View style={styles.imageRemoveBtnInner}>
+                    <Feather name="x" size={10} color="#FFFFFF" />
+                  </View>
                 </Pressable>
               </View>
             ))}
           </ScrollView>
         )}
 
-        <View style={styles.inputFooter}>
-          <View style={styles.inputFooterLeft}>
-            <Pressable
-              style={[styles.attachBtn, images.length >= 4 && styles.attachBtnDisabled]}
-              onPress={handlePickImage}
-              disabled={images.length >= 4}
-              hitSlop={8}
-            >
-              <Feather
-                name="image"
-                size={16}
-                color={images.length >= 4 ? Colors.light.textTertiary : Colors.light.tint}
-              />
-              <Text style={[
-                styles.attachLabel,
-                images.length >= 4 && { color: Colors.light.textTertiary },
-              ]}>
-                {images.length > 0 ? `${images.length}/4` : "Add image"}
-              </Text>
-            </Pressable>
-          </View>
-          <View style={styles.inputFooterRight}>
-            {charCount < 10 && charCount > 0 && !hasImages && (
-              <Text style={styles.hintText}>Keep going...</Text>
-            )}
-            <Text style={[
-              styles.charCount,
-              charCount > 900 && { color: Colors.light.priorityHigh }
-            ]}>
-              {charCount}/1000
-            </Text>
-          </View>
-        </View>
+        <Pressable
+          style={[styles.attachBtn, images.length >= 4 && styles.attachBtnDisabled]}
+          onPress={handlePickImage}
+          disabled={images.length >= 4}
+          hitSlop={8}
+        >
+          <Feather
+            name="image"
+            size={16}
+            color={images.length >= 4 ? Colors.light.textTertiary : Colors.light.tint}
+          />
+          <Text style={[
+            styles.attachLabel,
+            images.length >= 4 && { color: Colors.light.textTertiary },
+          ]}>
+            {images.length > 0 ? `${images.length}/4` : "Add image"}
+          </Text>
+        </Pressable>
       </View>
 
       {parseError && (
@@ -238,36 +228,20 @@ export default function CaptureScreen() {
           {isParsing ? (
             <ActivityIndicator color="#FFFFFF" size="small" />
           ) : (
-            <Feather name="cpu" size={18} color={canSubmit ? "#FFFFFF" : Colors.light.textTertiary} />
+            <View style={styles.threadIconWrap}>
+              <View style={styles.threadLine} />
+            </View>
           )}
           <Text style={[styles.captureBtnText, !canSubmit && styles.captureBtnTextDisabled]}>
-            {isParsing ? "Structuring thought..." : "Capture Thread"}
+            {isParsing ? "Spinning the thread..." : "Hold the thread"}
           </Text>
         </Pressable>
       </Animated.View>
 
       <Pressable style={styles.demoBtn} onPress={handleDemo}>
-        <Feather name="play-circle" size={14} color={Colors.light.textSecondary} />
-        <Text style={styles.demoBtnText}>Load Demo Thread</Text>
+        <Text style={styles.demoBtnText}>Load demo thread</Text>
       </Pressable>
-
-      <View style={styles.helperSection}>
-        <HelperItem icon="zap" text="Context switching? Capture your current state before switching." />
-        <HelperItem icon="camera" text="Attach screenshots of what you're working on for richer context." />
-        <HelperItem icon="arrow-right-circle" text="Come back later and tap 'Where was I?' to recover context instantly." />
-      </View>
     </KeyboardAwareScrollViewCompat>
-  );
-}
-
-function HelperItem({ icon, text }: { icon: React.ComponentProps<typeof Feather>["name"]; text: string }) {
-  return (
-    <View style={styles.helperItem}>
-      <View style={styles.helperIconWrap}>
-        <Feather name={icon} size={13} color={Colors.light.tint} />
-      </View>
-      <Text style={styles.helperText}>{text}</Text>
-    </View>
   );
 }
 
@@ -277,68 +251,71 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   content: {
-    paddingHorizontal: 20,
-    gap: 16,
+    paddingHorizontal: 24,
+    gap: 24,
   },
   header: {
-    marginBottom: 4,
+    marginBottom: 0,
   },
   logoRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
-    marginBottom: 6,
-  },
-  logoMark: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
-    backgroundColor: Colors.light.tint,
-    alignItems: "center",
-    justifyContent: "center",
+    gap: 12,
   },
   appName: {
-    fontFamily: "Inter_700Bold",
-    fontSize: 28,
+    fontFamily: "Lexend_700Bold",
+    fontSize: 30,
     color: Colors.light.text,
     letterSpacing: -0.5,
   },
-  tagline: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 14,
-    color: Colors.light.textSecondary,
-    marginLeft: 46,
+  hero: {
+    gap: 4,
+  },
+  headline: {
+    fontFamily: "Lexend_600SemiBold",
+    fontSize: 22,
+    color: Colors.light.text,
+    lineHeight: 32,
+    letterSpacing: -0.3,
   },
   recoverBanner: {
     backgroundColor: Colors.light.backgroundSecondary,
     borderRadius: 14,
-    borderWidth: 1.5,
-    borderColor: Colors.light.tint + "40",
-    padding: 14,
+    borderWidth: 1,
+    borderColor: Colors.light.tint + "30",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    minHeight: 56,
   },
   recoverLeft: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+    gap: 8,
+  },
+  recoverDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: Colors.light.tint,
   },
   recoverLabel: {
-    fontFamily: "Inter_600SemiBold",
-    fontSize: 13,
+    fontFamily: "Lexend_600SemiBold",
+    fontSize: 14,
     color: Colors.light.tint,
   },
   recoverRight: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
+    gap: 6,
     flex: 1,
     justifyContent: "flex-end",
   },
   recoverTitle: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 12,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 13,
     color: Colors.light.textSecondary,
     flex: 1,
     textAlign: "right",
@@ -346,31 +323,26 @@ const styles = StyleSheet.create({
   inputCard: {
     backgroundColor: Colors.light.backgroundSecondary,
     borderRadius: 20,
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: Colors.light.border,
     padding: 20,
-    shadowColor: Colors.light.cardShadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 8,
-    elevation: 2,
+    gap: 12,
   },
-  inputLabel: {
-    fontFamily: "Inter_600SemiBold",
-    fontSize: 14,
+  inputCardTitle: {
+    fontFamily: "Lexend_600SemiBold",
+    fontSize: 16,
     color: Colors.light.text,
-    marginBottom: 12,
   },
   textInput: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 15,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 16,
     color: Colors.light.text,
-    lineHeight: 24,
-    minHeight: 140,
+    lineHeight: 26,
+    minHeight: 120,
     textAlignVertical: "top",
   },
   imageRow: {
-    marginTop: 12,
+    marginTop: 4,
   },
   imageRowContent: {
     gap: 8,
@@ -386,81 +358,62 @@ const styles = StyleSheet.create({
   },
   imageRemoveBtn: {
     position: "absolute",
-    top: -6,
-    right: -6,
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: Colors.light.text,
+    top: -14,
+    right: -14,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     alignItems: "center",
     justifyContent: "center",
   },
-  inputFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  imageRemoveBtnInner: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: Colors.light.tint,
     alignItems: "center",
-    marginTop: 10,
-    paddingTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: Colors.light.border,
-  },
-  inputFooterLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  inputFooterRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
+    justifyContent: "center",
   },
   attachBtn: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    gap: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
     borderRadius: 8,
-    backgroundColor: Colors.light.tint + "12",
+    backgroundColor: Colors.light.tint + "15",
+    alignSelf: "flex-start",
+    minHeight: 56,
   },
   attachBtnDisabled: {
     backgroundColor: Colors.light.border + "40",
   },
   attachLabel: {
-    fontFamily: "Inter_500Medium",
-    fontSize: 12,
+    fontFamily: "Lexend_500Medium",
+    fontSize: 13,
     color: Colors.light.tint,
-  },
-  charCount: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 11,
-    color: Colors.light.textTertiary,
-  },
-  hintText: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 11,
-    color: Colors.light.textTertiary,
-    fontStyle: "italic",
   },
   errorBox: {
     flexDirection: "row",
     alignItems: "flex-start",
     gap: 8,
-    backgroundColor: Colors.light.priorityHigh + "12",
+    backgroundColor: Colors.light.priorityHigh + "15",
     borderRadius: 12,
-    padding: 12,
+    padding: 14,
     borderWidth: 1,
     borderColor: Colors.light.priorityHigh + "30",
   },
   errorText: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 13,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 14,
     color: Colors.light.priorityHigh,
     flex: 1,
-    lineHeight: 19,
+    lineHeight: 20,
   },
   captureBtn: {
     backgroundColor: Colors.light.tint,
     borderRadius: 16,
+    minHeight: 56,
     paddingVertical: 16,
     paddingHorizontal: 24,
     flexDirection: "row",
@@ -469,58 +422,44 @@ const styles = StyleSheet.create({
     gap: 10,
     shadowColor: Colors.light.tint,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    elevation: 4,
+    shadowOpacity: 0.4,
+    shadowRadius: 16,
+    elevation: 6,
   },
   captureBtnDisabled: {
-    backgroundColor: Colors.light.border,
+    backgroundColor: Colors.light.backgroundTertiary,
     shadowOpacity: 0,
     elevation: 0,
   },
+  threadIconWrap: {
+    width: 20,
+    height: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  threadLine: {
+    width: 2,
+    height: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 1,
+  },
   captureBtnText: {
-    fontFamily: "Inter_600SemiBold",
-    fontSize: 16,
+    fontFamily: "Lexend_600SemiBold",
+    fontSize: 17,
     color: "#FFFFFF",
   },
   captureBtnTextDisabled: {
     color: Colors.light.textTertiary,
   },
   demoBtn: {
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 6,
-    paddingVertical: 12,
+    paddingVertical: 14,
+    minHeight: 56,
   },
   demoBtnText: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 13,
+    fontFamily: "Lexend_400Regular",
+    fontSize: 15,
     color: Colors.light.textSecondary,
-  },
-  helperSection: {
-    gap: 10,
-    marginTop: 4,
-  },
-  helperItem: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 12,
-  },
-  helperIconWrap: {
-    width: 26,
-    height: 26,
-    borderRadius: 8,
-    backgroundColor: Colors.light.tint + "15",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 1,
-  },
-  helperText: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 13,
-    color: Colors.light.textSecondary,
-    flex: 1,
-    lineHeight: 20,
   },
 });
