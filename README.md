@@ -73,7 +73,7 @@ When you return — whether it's 10 minutes later or the next morning — you op
 
 ---
 
-## Why Gemini Makes This Possible
+## Why Gemini 3 Makes This Possible
 
 | Before Gemini | With Gemini |
 |---|---|
