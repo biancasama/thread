@@ -33,10 +33,24 @@ Rules:
 - Return ONLY the JSON object, no markdown, no explanation
 - Keep language productivity-focused. Never give medical or therapeutic advice.`;
 
+const ALLOWED_IMAGE_MIMES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+]);
+const MAX_IMAGE_FRAGMENTS = 4;
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+
 function parseDataUrl(dataUrl: string): { mimeType: string; data: string } | null {
   const match = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
   if (!match) return null;
-  return { mimeType: match[1], data: match[2] };
+  const mimeType = match[1];
+  const data = match[2];
+  if (!ALLOWED_IMAGE_MIMES.has(mimeType)) return null;
+  const approxBytes = (data.length * 3) / 4;
+  if (approxBytes > MAX_IMAGE_BYTES) return null;
+  return { mimeType, data };
 }
 
 router.post("/thread/parse", async (req, res) => {
@@ -50,6 +64,12 @@ router.post("/thread/parse", async (req, res) => {
 
   if (!fragments || fragments.length === 0) {
     res.status(400).json({ error: "At least one fragment is required" });
+    return;
+  }
+
+  const imageCount = fragments.filter((f) => f.type === "image").length;
+  if (imageCount > MAX_IMAGE_FRAGMENTS) {
+    res.status(400).json({ error: `Maximum ${MAX_IMAGE_FRAGMENTS} images allowed` });
     return;
   }
 
