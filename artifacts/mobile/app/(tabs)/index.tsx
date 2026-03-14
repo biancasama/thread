@@ -75,7 +75,11 @@ export default function CaptureScreen() {
     if (!canSubmit) return;
     if (Platform.OS !== "web") Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
-    const fragments: Fragment[] = [{ type: "text", content: text.trim() }];
+    const fragments: Fragment[] = [];
+    const trimmed = text.trim();
+    if (trimmed.length > 0) {
+      fragments.push({ type: "text", content: trimmed });
+    }
     for (const img of images) {
       fragments.push({ type: "image", content: img });
     }
