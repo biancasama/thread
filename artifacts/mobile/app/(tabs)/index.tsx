@@ -31,7 +31,9 @@ export default function CaptureScreen() {
   const buttonScale = useRef(new Animated.Value(1)).current;
 
   const charCount = text.length;
-  const canSubmit = charCount >= 10 && !isParsing;
+  const hasEnoughText = charCount >= 10;
+  const hasImages = images.length > 0;
+  const canSubmit = (hasEnoughText || hasImages) && !isParsing;
 
   const handlePressIn = () => {
     if (!canSubmit) return;
@@ -201,7 +203,7 @@ export default function CaptureScreen() {
             </Pressable>
           </View>
           <View style={styles.inputFooterRight}>
-            {charCount < 10 && charCount > 0 && (
+            {charCount < 10 && charCount > 0 && !hasImages && (
               <Text style={styles.hintText}>Keep going...</Text>
             )}
             <Text style={[

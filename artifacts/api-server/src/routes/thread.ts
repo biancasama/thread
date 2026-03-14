@@ -53,11 +53,13 @@ router.post("/thread/parse", async (req, res) => {
     return;
   }
 
-  const hasText = fragments.some(
-    (f) => f.type === "text" && f.content.trim().length > 0,
-  );
-  if (!hasText) {
-    res.status(400).json({ error: "At least one text fragment is required" });
+  const hasContent = fragments.some((f) => {
+    if (f.type === "text") return f.content.trim().length > 0;
+    if (f.type === "image") return parseDataUrl(f.content) !== null;
+    return false;
+  });
+  if (!hasContent) {
+    res.status(400).json({ error: "At least one valid fragment is required" });
     return;
   }
 
