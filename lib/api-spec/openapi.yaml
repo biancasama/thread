@@ -112,6 +112,10 @@ components:
         priority:
           type: string
           enum: [low, medium, high]
+        location:
+          type: string
+          nullable: true
+          description: Physical location, address, or venue name detected in the fragments
       required:
         - thread_title
         - goal

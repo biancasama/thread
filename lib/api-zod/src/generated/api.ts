@@ -38,4 +38,5 @@ export const ParseThreadResponse = zod.object({
   important_context: zod.string(),
   next_actions: zod.array(zod.string()),
   priority: zod.enum(["low", "medium", "high"]),
+  location: zod.string().nullable().optional(),
 });
