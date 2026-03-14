@@ -1,5 +1,9 @@
 # Thread
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/biancasama/thread/main/logo.png" alt="Thread — Ariadne's thread through the labyrinth of your mind" width="720" />
+</p>
+
 **Your second brain — for when yours needs a rest.**
 
 Thread is an AI-powered external working memory app that reconstructs your train of thought after interruptions, multitasking, or cognitive overload. You capture scattered fragments — text dumps, screenshots, voice notes — and Gemini stitches them into a structured "thought thread" that tells you exactly where you were and what to do next.
