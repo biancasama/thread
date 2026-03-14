@@ -9,9 +9,21 @@ export interface HealthStatus {
   status: string;
 }
 
+export type FragmentType =
+  (typeof FragmentType)[keyof typeof FragmentType];
+
+export const FragmentType = {
+  text: "text",
+  image: "image",
+} as const;
+
+export interface Fragment {
+  type: FragmentType;
+  content: string;
+}
+
 export interface ParseThreadBody {
-  /** The raw thought text to parse */
-  text: string;
+  fragments: Fragment[];
 }
 
 export type ParsedThreadPriority =

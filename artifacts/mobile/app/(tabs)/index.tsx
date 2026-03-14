@@ -1,12 +1,15 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
+import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
   Animated,
+  Image,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -16,13 +19,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Colors from "@/constants/colors";
 import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { KeyboardAwareScrollViewCompat } from "@/components/KeyboardAwareScrollViewCompat";
-import { useThreads } from "@/context/ThreadContext";
+import { useThreads, type Fragment } from "@/context/ThreadContext";
 
 export default function CaptureScreen() {
   const insets = useSafeAreaInsets();
   const tabBarHeight = insets.bottom + TAB_BAR_HEIGHT;
   const { parseThought, loadDemoThread, isParsing, parseError, clearError, activeThread } = useThreads();
   const [text, setText] = useState("");
+  const [images, setImages] = useState<string[]>([]);
   const inputRef = useRef<TextInput>(null);
   const buttonScale = useRef(new Animated.Value(1)).current;
 
@@ -37,12 +41,47 @@ export default function CaptureScreen() {
     Animated.spring(buttonScale, { toValue: 1, useNativeDriver: true, speed: 50 }).start();
   };
 
+  const handlePickImage = async () => {
+    if (images.length >= 4) return;
+    if (Platform.OS !== "web") Haptics.selectionAsync();
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      quality: 0.7,
+      base64: true,
+      allowsMultipleSelection: true,
+      selectionLimit: 4 - images.length,
+    });
+
+    if (!result.canceled && result.assets) {
+      const newImages = result.assets
+        .filter((a) => a.base64)
+        .map((a) => {
+          const ext = a.mimeType || "image/jpeg";
+          return `data:${ext};base64,${a.base64}`;
+        });
+      setImages((prev) => [...prev, ...newImages].slice(0, 4));
+    }
+  };
+
+  const removeImage = (index: number) => {
+    if (Platform.OS !== "web") Haptics.selectionAsync();
+    setImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const handleCapture = async () => {
     if (!canSubmit) return;
     if (Platform.OS !== "web") Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    const result = await parseThought(text.trim());
+
+    const fragments: Fragment[] = [{ type: "text", content: text.trim() }];
+    for (const img of images) {
+      fragments.push({ type: "image", content: img });
+    }
+
+    const result = await parseThought(fragments);
     if (result) {
       setText("");
+      setImages([]);
       if (Platform.OS !== "web") Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       router.push(`/thread/${result.id}`);
     }
@@ -69,7 +108,6 @@ export default function CaptureScreen() {
       ]}
       bottomOffset={60}
     >
-      {/* Header */}
       <View style={styles.header}>
         <View style={styles.logoRow}>
           <View style={styles.logoMark}>
@@ -80,7 +118,6 @@ export default function CaptureScreen() {
         <Text style={styles.tagline}>Recover your train of thought</Text>
       </View>
 
-      {/* Recovery Button if active thread exists */}
       {activeThread && (
         <Pressable
           style={styles.recoverBanner}
@@ -99,7 +136,6 @@ export default function CaptureScreen() {
         </Pressable>
       )}
 
-      {/* Input Area */}
       <View style={styles.inputCard}>
         <Text style={styles.inputLabel}>What are you thinking?</Text>
         <TextInput
@@ -120,20 +156,64 @@ export default function CaptureScreen() {
           autoCapitalize="sentences"
           maxLength={1000}
         />
+
+        {images.length > 0 && (
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.imageRow}
+            contentContainerStyle={styles.imageRowContent}
+          >
+            {images.map((uri, i) => (
+              <View key={i} style={styles.imageThumbWrap}>
+                <Image source={{ uri }} style={styles.imageThumb} />
+                <Pressable
+                  style={styles.imageRemoveBtn}
+                  onPress={() => removeImage(i)}
+                  hitSlop={8}
+                >
+                  <Feather name="x" size={10} color="#FFFFFF" />
+                </Pressable>
+              </View>
+            ))}
+          </ScrollView>
+        )}
+
         <View style={styles.inputFooter}>
-          <Text style={[
-            styles.charCount,
-            charCount > 900 && { color: Colors.light.priorityHigh }
-          ]}>
-            {charCount}/1000
-          </Text>
-          {charCount < 10 && charCount > 0 && (
-            <Text style={styles.hintText}>Keep going...</Text>
-          )}
+          <View style={styles.inputFooterLeft}>
+            <Pressable
+              style={[styles.attachBtn, images.length >= 4 && styles.attachBtnDisabled]}
+              onPress={handlePickImage}
+              disabled={images.length >= 4}
+              hitSlop={8}
+            >
+              <Feather
+                name="image"
+                size={16}
+                color={images.length >= 4 ? Colors.light.textTertiary : Colors.light.tint}
+              />
+              <Text style={[
+                styles.attachLabel,
+                images.length >= 4 && { color: Colors.light.textTertiary },
+              ]}>
+                {images.length > 0 ? `${images.length}/4` : "Add image"}
+              </Text>
+            </Pressable>
+          </View>
+          <View style={styles.inputFooterRight}>
+            {charCount < 10 && charCount > 0 && (
+              <Text style={styles.hintText}>Keep going...</Text>
+            )}
+            <Text style={[
+              styles.charCount,
+              charCount > 900 && { color: Colors.light.priorityHigh }
+            ]}>
+              {charCount}/1000
+            </Text>
+          </View>
         </View>
       </View>
 
-      {/* Error */}
       {parseError && (
         <View style={styles.errorBox}>
           <Feather name="alert-circle" size={14} color={Colors.light.priorityHigh} />
@@ -141,7 +221,6 @@ export default function CaptureScreen() {
         </View>
       )}
 
-      {/* Capture Button */}
       <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
         <Pressable
           style={[styles.captureBtn, !canSubmit && styles.captureBtnDisabled]}
@@ -161,16 +240,14 @@ export default function CaptureScreen() {
         </Pressable>
       </Animated.View>
 
-      {/* Demo button */}
       <Pressable style={styles.demoBtn} onPress={handleDemo}>
         <Feather name="play-circle" size={14} color={Colors.light.textSecondary} />
         <Text style={styles.demoBtnText}>Load Demo Thread</Text>
       </Pressable>
 
-      {/* Helper copy */}
       <View style={styles.helperSection}>
         <HelperItem icon="zap" text="Context switching? Capture your current state before switching." />
-        <HelperItem icon="clock" text="Just got interrupted? Dump your thoughts here before you forget." />
+        <HelperItem icon="camera" text="Attach screenshots of what you're working on for richer context." />
         <HelperItem icon="arrow-right-circle" text="Come back later and tap 'Where was I?' to recover context instantly." />
       </View>
     </KeyboardAwareScrollViewCompat>
@@ -286,6 +363,32 @@ const styles = StyleSheet.create({
     minHeight: 140,
     textAlignVertical: "top",
   },
+  imageRow: {
+    marginTop: 12,
+  },
+  imageRowContent: {
+    gap: 8,
+  },
+  imageThumbWrap: {
+    position: "relative",
+  },
+  imageThumb: {
+    width: 72,
+    height: 72,
+    borderRadius: 10,
+    backgroundColor: Colors.light.border,
+  },
+  imageRemoveBtn: {
+    position: "absolute",
+    top: -6,
+    right: -6,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: Colors.light.text,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   inputFooter: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -294,6 +397,32 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     borderTopWidth: 1,
     borderTopColor: Colors.light.border,
+  },
+  inputFooterLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  inputFooterRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  attachBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    backgroundColor: Colors.light.tint + "12",
+  },
+  attachBtnDisabled: {
+    backgroundColor: Colors.light.border + "40",
+  },
+  attachLabel: {
+    fontFamily: "Inter_500Medium",
+    fontSize: 12,
+    color: Colors.light.tint,
   },
   charCount: {
     fontFamily: "Inter_400Regular",

@@ -6,6 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./fragmentType";
 export * from "./healthStatus";
 export * from "./parsedThread";
 export * from "./parsedThreadPriority";

@@ -30,7 +30,7 @@ paths:
     post:
       operationId: parseThread
       tags: [thread]
-      summary: Parse a raw thought into a structured thread using Gemini
+      summary: Parse multimodal thought fragments into a structured thread using Gemini
       requestBody:
         required: true
         content:
@@ -65,14 +65,29 @@ components:
           type: string
       required:
         - status
+    Fragment:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [text, image]
+          description: The type of fragment
+        content:
+          type: string
+          description: Text content or base64 data URL for images
+      required:
+        - type
+        - content
     ParseThreadBody:
       type: object
       properties:
-        text:
-          type: string
-          description: The raw thought text to parse
+        fragments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Fragment"
+          description: Array of thought fragments (text and/or images)
       required:
-        - text
+        - fragments
     ParsedThread:
       type: object
       properties:

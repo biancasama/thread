@@ -4,14 +4,20 @@ import { ParseThreadBody } from "@workspace/api-zod";
 
 const router: IRouter = Router();
 
-const SYSTEM_PROMPT = `You are an AI that reconstructs human thought threads. Given a short text or speech transcript, infer the thread title, goal, current step, important context, next actions, and priority.
+const SYSTEM_PROMPT = `You are a Cognitive Compass — an AI that reconstructs human thought threads from scattered fragments. Users capture their thoughts as text notes and screenshots when they're mid-task, overwhelmed, or about to be interrupted. Your job is to stitch these fragments into a coherent "cognitive playlist" that tells them exactly where they were and what to do next.
+
+You may receive:
+- Text fragments: typed notes, voice memo transcripts, or stream-of-consciousness dumps
+- Image fragments: screenshots of their screen, photos of whiteboards, or snapshots of documents
+
+Analyze ALL provided fragments together — text and images — to reconstruct the user's train of thought.
 
 Return ONLY valid JSON with this exact structure, nothing else:
 {
   "thread_title": "concise title for this thought thread",
   "goal": "the overarching goal or objective",
-  "current_step": "what the person is currently doing",
-  "important_context": "key context that helps understand the situation",
+  "current_step": "what the person is currently doing or was doing when interrupted",
+  "important_context": "key context reconstructed from all fragments that helps resume work",
   "next_actions": ["action 1", "action 2", "action 3"],
   "priority": "low" | "medium" | "high"
 }
@@ -19,12 +25,19 @@ Return ONLY valid JSON with this exact structure, nothing else:
 Rules:
 - thread_title: 3-7 words, clear and specific
 - goal: one sentence describing the end state
-- current_step: what they were doing right now
-- important_context: background info that matters
-- next_actions: 2-4 concrete, actionable next steps
-- priority: infer from urgency/importance signals in the text
+- current_step: what they were doing right now, inferred from all fragments
+- important_context: synthesize background info from text AND visual content in images
+- next_actions: 2-4 concrete, actionable next steps — tell them exactly what to do when they return
+- priority: infer from urgency/importance signals across all fragments
+- If images contain code, documents, or UI, extract relevant details into the context
 - Return ONLY the JSON object, no markdown, no explanation
 - Keep language productivity-focused. Never give medical or therapeutic advice.`;
+
+function parseDataUrl(dataUrl: string): { mimeType: string; data: string } | null {
+  const match = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
+  if (!match) return null;
+  return { mimeType: match[1], data: match[2] };
+}
 
 router.post("/thread/parse", async (req, res) => {
   const parsed = ParseThreadBody.safeParse(req.body);
@@ -33,20 +46,49 @@ router.post("/thread/parse", async (req, res) => {
     return;
   }
 
-  const { text } = parsed.data;
+  const { fragments } = parsed.data;
 
-  if (!text || text.trim().length === 0) {
-    res.status(400).json({ error: "Text cannot be empty" });
+  if (!fragments || fragments.length === 0) {
+    res.status(400).json({ error: "At least one fragment is required" });
+    return;
+  }
+
+  const hasText = fragments.some(
+    (f) => f.type === "text" && f.content.trim().length > 0,
+  );
+  if (!hasText) {
+    res.status(400).json({ error: "At least one text fragment is required" });
     return;
   }
 
   try {
+    const parts: Array<
+      | { text: string }
+      | { inlineData: { mimeType: string; data: string } }
+    > = [{ text: SYSTEM_PROMPT }];
+
+    for (const fragment of fragments) {
+      if (fragment.type === "text") {
+        parts.push({ text: fragment.content });
+      } else if (fragment.type === "image") {
+        const imageData = parseDataUrl(fragment.content);
+        if (imageData) {
+          parts.push({
+            inlineData: {
+              mimeType: imageData.mimeType,
+              data: imageData.data,
+            },
+          });
+        }
+      }
+    }
+
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: [
         {
           role: "user",
-          parts: [{ text: `${SYSTEM_PROMPT}\n\nUser input: ${text}` }],
+          parts,
         },
       ],
       config: {
@@ -72,7 +114,6 @@ router.post("/thread/parse", async (req, res) => {
     };
 
     try {
-      // Strip markdown code blocks if present
       const cleaned = rawText
         .replace(/^```(?:json)?\s*/i, "")
         .replace(/\s*```$/i, "")
@@ -84,7 +125,6 @@ router.post("/thread/parse", async (req, res) => {
       return;
     }
 
-    // Validate required fields
     if (
       !threadData.thread_title ||
       !threadData.goal ||

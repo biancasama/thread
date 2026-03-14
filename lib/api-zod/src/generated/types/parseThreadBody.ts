@@ -5,8 +5,16 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { FragmentType } from "./fragmentType";
+
+export interface Fragment {
+  /** The type of fragment */
+  type: FragmentType;
+  /** Text content or base64 data URL for images */
+  content: string;
+}
 
 export interface ParseThreadBody {
-  /** The raw thought text to parse */
-  text: string;
+  /** Array of thought fragments (text and/or images) */
+  fragments: Fragment[];
 }

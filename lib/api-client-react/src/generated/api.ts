@@ -109,7 +109,7 @@ export function useHealthCheck<
 }
 
 /**
- * @summary Parse a raw thought into a structured thread using Gemini
+ * @summary Parse multimodal thought fragments into a structured thread using Gemini
  */
 export const getParseThreadUrl = () => {
   return `/api/thread/parse`;
@@ -172,7 +172,7 @@ export type ParseThreadMutationBody = BodyType<ParseThreadBody>;
 export type ParseThreadMutationError = ErrorType<ParseError>;
 
 /**
- * @summary Parse a raw thought into a structured thread using Gemini
+ * @summary Parse multimodal thought fragments into a structured thread using Gemini
  */
 export const useParseThread = <
   TError = ErrorType<ParseError>,

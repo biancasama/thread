@@ -15,11 +15,20 @@ export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
 
+export const Fragment = zod.object({
+  type: zod.enum(["text", "image"]).describe("The type of fragment"),
+  content: zod
+    .string()
+    .describe("Text content or base64 data URL for images"),
+});
+
 /**
- * @summary Parse a raw thought into a structured thread using Gemini
+ * @summary Parse multimodal thought fragments into a structured thread using Gemini
  */
 export const ParseThreadBody = zod.object({
-  text: zod.string().describe("The raw thought text to parse"),
+  fragments: zod
+    .array(Fragment)
+    .describe("Array of thought fragments (text and/or images)"),
 });
 
 export const ParseThreadResponse = zod.object({

@@ -8,6 +8,11 @@ import React, {
   useState,
 } from "react";
 
+export interface Fragment {
+  type: "text" | "image";
+  content: string;
+}
+
 export interface Thread {
   id: string;
   thread_title: string;
@@ -26,7 +31,7 @@ interface ThreadContextValue {
   isLoading: boolean;
   isParsing: boolean;
   parseError: string | null;
-  parseThought: (text: string) => Promise<Thread | null>;
+  parseThought: (fragments: Fragment[]) => Promise<Thread | null>;
   loadDemoThread: () => void;
   deleteThread: (id: string) => void;
   setActiveThread: (thread: Thread | null) => void;
@@ -93,7 +98,7 @@ export function ThreadProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const parseThought = useCallback(async (text: string): Promise<Thread | null> => {
+  const parseThought = useCallback(async (fragments: Fragment[]): Promise<Thread | null> => {
     setIsParsing(true);
     setParseError(null);
 
@@ -101,7 +106,7 @@ export function ThreadProvider({ children }: { children: React.ReactNode }) {
       const response = await fetch(`${API_BASE}/thread/parse`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ fragments }),
       });
 
       if (!response.ok) {
@@ -111,6 +116,11 @@ export function ThreadProvider({ children }: { children: React.ReactNode }) {
 
       const data = await response.json();
 
+      const rawInput = fragments
+        .filter((f) => f.type === "text")
+        .map((f) => f.content)
+        .join("\n");
+
       const newThread: Thread = {
         id: Date.now().toString() + Math.random().toString(36).substring(2, 7),
         thread_title: data.thread_title,
@@ -119,7 +129,7 @@ export function ThreadProvider({ children }: { children: React.ReactNode }) {
         important_context: data.important_context,
         next_actions: data.next_actions,
         priority: data.priority,
-        raw_input: text,
+        raw_input: rawInput,
         created_at: new Date().toISOString(),
       };
 
