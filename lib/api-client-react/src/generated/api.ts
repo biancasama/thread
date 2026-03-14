@@ -5,18 +5,26 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  HealthStatus,
+  ParseError,
+  ParseThreadBody,
+  ParsedThread,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -99,3 +107,89 @@ export function useHealthCheck<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * @summary Parse a raw thought into a structured thread using Gemini
+ */
+export const getParseThreadUrl = () => {
+  return `/api/thread/parse`;
+};
+
+export const parseThread = async (
+  parseThreadBody: ParseThreadBody,
+  options?: RequestInit,
+): Promise<ParsedThread> => {
+  return customFetch<ParsedThread>(getParseThreadUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(parseThreadBody),
+  });
+};
+
+export const getParseThreadMutationOptions = <
+  TError = ErrorType<ParseError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof parseThread>>,
+    TError,
+    { data: BodyType<ParseThreadBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof parseThread>>,
+  TError,
+  { data: BodyType<ParseThreadBody> },
+  TContext
+> => {
+  const mutationKey = ["parseThread"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof parseThread>>,
+    { data: BodyType<ParseThreadBody> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return parseThread(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type ParseThreadMutationResult = NonNullable<
+  Awaited<ReturnType<typeof parseThread>>
+>;
+export type ParseThreadMutationBody = BodyType<ParseThreadBody>;
+export type ParseThreadMutationError = ErrorType<ParseError>;
+
+/**
+ * @summary Parse a raw thought into a structured thread using Gemini
+ */
+export const useParseThread = <
+  TError = ErrorType<ParseError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof parseThread>>,
+    TError,
+    { data: BodyType<ParseThreadBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof parseThread>>,
+  TError,
+  { data: BodyType<ParseThreadBody> },
+  TContext
+> => {
+  return useMutation(getParseThreadMutationOptions(options));
+};

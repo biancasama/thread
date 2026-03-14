@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: thread
+    description: Thread AI parsing operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,36 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /thread/parse:
+    post:
+      operationId: parseThread
+      tags: [thread]
+      summary: Parse a raw thought into a structured thread using Gemini
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ParseThreadBody"
+      responses:
+        "200":
+          description: Parsed thread
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParsedThread"
+        "422":
+          description: Parsing failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParseError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParseError"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +65,43 @@ components:
           type: string
       required:
         - status
-
+    ParseThreadBody:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The raw thought text to parse
+      required:
+        - text
+    ParsedThread:
+      type: object
+      properties:
+        thread_title:
+          type: string
+        goal:
+          type: string
+        current_step:
+          type: string
+        important_context:
+          type: string
+        next_actions:
+          type: array
+          items:
+            type: string
+        priority:
+          type: string
+          enum: [low, medium, high]
+      required:
+        - thread_title
+        - goal
+        - current_step
+        - important_context
+        - next_actions
+        - priority
+    ParseError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error

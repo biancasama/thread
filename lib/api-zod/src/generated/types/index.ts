@@ -7,3 +7,7 @@
  */
 
 export * from "./healthStatus";
+export * from "./parsedThread";
+export * from "./parsedThreadPriority";
+export * from "./parseError";
+export * from "./parseThreadBody";

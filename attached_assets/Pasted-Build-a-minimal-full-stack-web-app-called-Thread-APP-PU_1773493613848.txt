@@ -1,0 +1,205 @@
+Build a minimal full-stack web app called "Thread".
+
+APP PURPOSE
+
+Thread is an AI-powered external working memory tool that helps users recover their train of thought after interruptions, multitasking, or context switching.
+
+This is a productivity and cognitive load support tool for general users.
+It is NOT a medical product, not a therapy app, and it must not provide medical advice or diagnostic guidance.
+
+The app should help users:
+- capture a thought
+- structure it into a meaningful thread
+- recover context later
+- understand what they were doing
+- know what to do next
+
+CORE PRODUCT IDEA
+
+People often lose their train of thought while working.
+Instead of saving raw notes only, Thread should use Gemini to transform short text or voice inputs into structured memory units called thought threads.
+
+Each thought thread should contain:
+- thread title
+- goal
+- current step
+- important context
+- next actions
+- priority
+- timestamp
+
+Later, when the user clicks "Where was I?", the app should reconstruct the most relevant recent thread and display:
+- what the user was working on
+- the last known step
+- suggested next actions
+
+TECH STACK
+
+Please use the fastest stack for a hackathon MVP.
+Preferred:
+- React frontend
+- Node/Express backend if needed
+- clean modern CSS or Tailwind if convenient
+- Gemini API integration
+- local state or local storage for persistence
+
+Do not add:
+- auth
+- database
+- payments
+- collaboration
+- unnecessary complexity
+
+MVP FEATURES
+
+1. HEADER
+- App name: Thread
+- Tagline: Recover your train of thought
+
+2. THOUGHT INPUT PANEL
+- Large text area where user can type a thought
+- Capture button
+- Optional voice input button if fast and simple
+- Helper text like: "Capture what you're thinking, planning, or trying to do."
+
+3. GEMINI PARSING
+When the user submits a thought, send it to Gemini and extract structured JSON in this format:
+
+{
+  "thread_title": string,
+  "goal": string,
+  "current_step": string,
+  "important_context": string,
+  "next_actions": [string],
+  "priority": "low" | "medium" | "high"
+}
+
+Use a prompt like:
+"You are an AI that reconstructs human thought threads. Given a short text or speech transcript, infer the thread title, goal, current step, important context, next actions, and priority. Return valid JSON only."
+
+Ensure JSON parsing is robust.
+If the model output is malformed, fail gracefully.
+
+4. ACTIVE THREAD PANEL
+After parsing, display the latest thread in a clean card with:
+- title
+- goal
+- current step
+- important context
+- next actions
+- priority
+
+5. RECOVER CONTEXT PANEL
+Add a prominent button:
+"Where was I?"
+
+When clicked, show a recovery summary based on the most recent thread, like:
+- You were working on: [thread title]
+- Goal: [goal]
+- Last known step: [current step]
+- Next actions:
+  1. ...
+  2. ...
+  3. ...
+
+6. THREAD HISTORY
+Show previous captured threads in a simple list or card column.
+
+7. DEMO MODE / FALLBACK
+Add a button called "Load Demo Thread".
+This should populate the app with a hardcoded thread so that the app can still be demonstrated even if the API fails.
+
+Use this exact demo data:
+- thread_title: Hackathon Project - Thread
+- goal: Build an AI external working memory assistant
+- current_step: Preparing demo pitch
+- important_context: The user is finalizing the hackathon demo
+- next_actions:
+  1. Write 15-second hook
+  2. Prepare demo artifacts
+  3. Record submission video
+- priority: high
+
+IMPORTANT PRODUCT LANGUAGE
+
+Keep the product language focused on:
+- interruptions
+- multitasking
+- context switching
+- cognitive overload
+- mental load
+- recovering train of thought
+- external working memory
+
+Do not frame the app as:
+- a medical assistant
+- a healthcare tool
+- a treatment tool
+- a therapy product
+- diagnostic support
+
+If users mention illness or symptoms, keep the app behavior purely organizational and productivity-oriented.
+
+UX DIRECTION
+
+The UI should feel:
+- calm
+- modern
+- minimal
+- helpful
+- polished enough for a live hackathon demo
+
+Suggested layout:
+- top header
+- left column: thought input
+- center: active thread
+- right: recovery panel and history
+or another simple layout that is visually clear
+
+IMPLEMENTATION DETAILS
+
+Please generate:
+- all required files
+- frontend code
+- backend code if needed
+- environment variable handling for Gemini API key
+- instructions to run locally
+- clear comments in important areas
+
+If voice input is too complex, skip it and keep the app text-first.
+If persistent storage is too complex, use local storage.
+If a backend is unnecessary, simplify.
+
+RECOVERY LOGIC
+
+The "Where was I?" feature does not need advanced retrieval.
+For MVP purposes, it can use the latest captured thread or the most relevant recent one.
+
+EXAMPLE USER FLOW
+
+Input:
+"I'm building a hackathon project called Thread. It's about helping people recover their train of thought. My next step is writing the demo pitch and preparing the submission video."
+
+Expected extracted thread:
+- thread_title: Hackathon Project - Thread
+- goal: Build and demo Thread
+- current_step: Writing demo pitch and preparing submission materials
+- important_context: The user is building a hackathon productivity app focused on recovering train of thought
+- next_actions:
+  1. Write the 15-second hook
+  2. Prepare demo artifacts
+  3. Record the 1-minute submission video
+- priority: high
+
+Expected recovery result:
+You were working on the Thread hackathon project.
+Your last known step was writing the demo pitch.
+The next best actions are:
+1. Write the 15-second hook
+2. Prepare demo artifacts
+3. Record the video
+
+FINAL GOAL
+
+I want a working MVP that feels original, polished, and reliable in a live hackathon demo.
+Please build the project now with a bias toward simplicity, reliability, and speed.

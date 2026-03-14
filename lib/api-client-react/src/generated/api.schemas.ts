@@ -8,3 +8,30 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface ParseThreadBody {
+  /** The raw thought text to parse */
+  text: string;
+}
+
+export type ParsedThreadPriority =
+  (typeof ParsedThreadPriority)[keyof typeof ParsedThreadPriority];
+
+export const ParsedThreadPriority = {
+  low: "low",
+  medium: "medium",
+  high: "high",
+} as const;
+
+export interface ParsedThread {
+  thread_title: string;
+  goal: string;
+  current_step: string;
+  important_context: string;
+  next_actions: string[];
+  priority: ParsedThreadPriority;
+}
+
+export interface ParseError {
+  error: string;
+}

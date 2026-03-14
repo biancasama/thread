@@ -14,3 +14,19 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * @summary Parse a raw thought into a structured thread using Gemini
+ */
+export const ParseThreadBody = zod.object({
+  text: zod.string().describe("The raw thought text to parse"),
+});
+
+export const ParseThreadResponse = zod.object({
+  thread_title: zod.string(),
+  goal: zod.string(),
+  current_step: zod.string(),
+  important_context: zod.string(),
+  next_actions: zod.array(zod.string()),
+  priority: zod.enum(["low", "medium", "high"]),
+});

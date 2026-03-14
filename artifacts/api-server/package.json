@@ -9,9 +9,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@workspace/db": "workspace:*",
     "@workspace/api-zod": "workspace:*",
-    "drizzle-orm": "catalog:",
+    "@workspace/integrations-gemini-ai": "workspace:*",
     "express": "^5",
     "cookie-parser": "^1.4.7",
     "cors": "^2"
