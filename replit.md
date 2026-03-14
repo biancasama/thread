@@ -82,6 +82,12 @@ artifacts-monorepo/
 - System prompt frames the AI as a "Cognitive Compass" that reconstructs thought threads from scattered multimodal fragments
 - Graceful error handling for malformed responses
 
+## GitHub Repository
+- **URL**: https://github.com/biancasama/thread
+- **Visibility**: Public
+- **Default branch**: main
+- **Remote name**: `origin`
+
 ## Environment Variables
 - `AI_INTEGRATIONS_GEMINI_BASE_URL` — Auto-set by Replit
 - `AI_INTEGRATIONS_GEMINI_API_KEY` — Auto-set by Replit
