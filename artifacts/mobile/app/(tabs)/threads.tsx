@@ -1,5 +1,4 @@
 import { Feather } from "@expo/vector-icons";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { router } from "expo-router";
 import React from "react";
 import {
@@ -16,7 +15,7 @@ import { useThreads } from "@/context/ThreadContext";
 
 export default function ThreadsScreen() {
   const insets = useSafeAreaInsets();
-  const tabBarHeight = useBottomTabBarHeight();
+  const tabBarHeight = insets.bottom + 49;
   const { threads, activeThread, setActiveThread, deleteThread } = useThreads();
 
   const topInset = Platform.OS === "web" ? 67 : insets.top;

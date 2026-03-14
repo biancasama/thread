@@ -1,5 +1,4 @@
 import { Feather } from "@expo/vector-icons";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
 import React, { useRef, useState } from "react";
@@ -20,7 +19,7 @@ import { useThreads } from "@/context/ThreadContext";
 
 export default function CaptureScreen() {
   const insets = useSafeAreaInsets();
-  const tabBarHeight = useBottomTabBarHeight();
+  const tabBarHeight = insets.bottom + 49;
   const { parseThought, loadDemoThread, isParsing, parseError, clearError, activeThread } = useThreads();
   const [text, setText] = useState("");
   const inputRef = useRef<TextInput>(null);
