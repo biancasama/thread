@@ -62,12 +62,12 @@ Thread is a **cognitive continuity tool**.
 
 It captures fragments of thought — text, screenshots, or images — and uses Gemini's multimodal reasoning to reconstruct a structured thread:
 
-• **Thread title** — what you were working on  
-• **Goal** — the outcome you were aiming for  
-• **Current step** — the exact point where you stopped  
-• **Important context** — synthesized from everything you captured  
-• **Next actions** — concrete steps to resume work  
-• **Priority level** — how urgent it is  
+- **Thread title** — what you were working on  
+- **Goal** — the outcome you were aiming for  
+- **Current step** — the exact point where you stopped  
+- **Important context** — synthesized from everything you captured  
+- **Next actions** — concrete steps to resume work  
+- **Priority level** — how urgent it is  
 
 When you return — minutes later or the next morning — you open Thread and tap **"Where was I?"**.
 
