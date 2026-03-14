@@ -90,7 +90,7 @@ router.post("/thread/parse", async (req, res) => {
     > = [{ text: SYSTEM_PROMPT }];
 
     for (const fragment of fragments) {
-      if (fragment.type === "text") {
+      if (fragment.type === "text" && fragment.content.trim().length > 0) {
         parts.push({ text: fragment.content });
       } else if (fragment.type === "image") {
         const imageData = parseDataUrl(fragment.content);

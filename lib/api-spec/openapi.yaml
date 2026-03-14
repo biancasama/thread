@@ -44,6 +44,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ParsedThread"
+        "400":
+          description: Invalid request (missing or malformed fragments)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParseError"
         "422":
           description: Parsing failed
           content:
